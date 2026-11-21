@@ -27,3 +27,20 @@ def get_db():
         password=os.environ.get("POSTGRES_PASSWORD", "postgres"),
     )
 
+def base62_encode(num):
+    """Convert a database ID into a short alphanumeric string."""
+    if num == 0:
+        return ALPHABET[0]
+    result = []
+    while num > 0:
+        num, remainder = divmod(num, 62)
+        result.append(ALPHABET[remainder])
+    return "".join(reversed(result))
+
+
+def base62_decode(code):
+    """Convert a short code back into the original database ID."""
+    num = 0
+    for char in code:
+        num = num * 62 + ALPHABET.index(char)
+    return num
