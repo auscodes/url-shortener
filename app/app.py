@@ -97,3 +97,11 @@ def redirect_url(short_code):
     cache.set(short_code, long_url)
 
     return redirect(long_url, code=302)
+
+@app.route("/health")
+def health():
+    return jsonify({"status": "healthy"})
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
